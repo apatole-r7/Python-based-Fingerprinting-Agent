@@ -1,0 +1,126 @@
+{
+  "agent_metadata": {
+    "agent_id": "d0392040-9836-4742-b72d-5a0a13a9bd9a",
+    "timestamp": "2026-01-15T08:54:44Z",
+    "scan_type": "local",
+    "target_host": "PNQ-MBP-14600",
+    "agent_version": "2.0.0",
+    "scan_duration_ms": 328
+  },
+  "system_info": {
+    "os": "macOS",
+    "version": "15.7.2",
+    "kernel": "24.6.0",
+    "cpu": "Apple M4 Pro",
+    "architecture": "arm64",
+    "hostname": "PNQ-MBP-14600",
+    "evidence": {
+      "os_version": {
+        "command_run": "sw_vers -productVersion",
+        "raw_output": "15.7.2"
+      },
+      "kernel": {
+        "command_run": "uname -r",
+        "raw_output": "24.6.0"
+      },
+      "cpu": {
+        "command_run": "sysctl -n machdep.cpu.brand_string",
+        "raw_output": "Apple M4 Pro"
+      },
+      "architecture": {
+        "command_run": "uname -m",
+        "raw_output": "arm64"
+      },
+      "hostname": {
+        "command_run": "hostname",
+        "raw_output": "PNQ-MBP-14600"
+      }
+    }
+  },
+  "software_inventory": [
+    {
+      "productName": "Visual Studio Code",
+      "versionNumber": "1.107.1",
+      "architecture": "arm64",
+      "productFamily": "IDE",
+      "vendor": "Microsoft",
+      "installPath": "/Applications/Visual Studio Code.app",
+      "evidence": {
+        "detection": {
+          "command_run": "mdfind \"kMDItemCFBundleIdentifier == 'com.microsoft.VSCode'\" 2>/dev/null | head -n 1",
+          "raw_output": "/Applications/Visual Studio Code.app"
+        }
+      }
+    },
+    {
+      "productName": "Docker",
+      "versionNumber": "29.1.3",
+      "architecture": "arm64",
+      "productFamily": "Virtualization",
+      "vendor": "Docker Inc.",
+      "installPath": "/usr/local/bin/docker",
+      "evidence": {
+        "detection": {
+          "command_run": "which docker 2>/dev/null",
+          "raw_output": "/usr/local/bin/docker"
+        }
+      }
+    },
+    {
+      "productName": "Slack",
+      "versionNumber": "4.47.72",
+      "architecture": "arm64",
+      "productFamily": "Communication",
+      "vendor": "Slack Technologies",
+      "installPath": "/Applications/Slack.app",
+      "evidence": {
+        "detection": {
+          "command_run": "mdfind \"kMDItemCFBundleIdentifier == 'com.tinyspeck.slackmacgap'\" 2>/dev/null | head -n 1",
+          "raw_output": "/Applications/Slack.app"
+        }
+      }
+    },
+    {
+      "productName": "Google Chrome",
+      "versionNumber": "143.0.7499.193",
+      "architecture": "arm64",
+      "productFamily": "Browser",
+      "vendor": "Google",
+      "installPath": "/Applications/Google Chrome.app",
+      "evidence": {
+        "detection": {
+          "command_run": "mdfind \"kMDItemCFBundleIdentifier == 'com.google.Chrome'\" 2>/dev/null | head -n 1",
+          "raw_output": "/Applications/Google Chrome.app"
+        }
+      }
+    },
+    {
+      "productName": "Python",
+      "versionNumber": "3.9.6",
+      "architecture": "arm64",
+      "productFamily": "Programming Language",
+      "vendor": "Python Software Foundation",
+      "installPath": "/usr/bin/python3",
+      "evidence": {
+        "detection": {
+          "command_run": "which python3 2>/dev/null || which python 2>/dev/null",
+          "raw_output": "/usr/bin/python3"
+        }
+      }
+    },
+    {
+      "productName": "Git",
+      "versionNumber": "2.50.1",
+      "architecture": "arm64",
+      "productFamily": "Version Control",
+      "vendor": "Git SCM",
+      "installPath": "/usr/bin/git",
+      "evidence": {
+        "detection": {
+          "command_run": "which git 2>/dev/null",
+          "raw_output": "/usr/bin/git"
+        }
+      }
+    }
+  ]
+}
