@@ -1,137 +1,145 @@
-# PROJECT COMPLETION SUMMARY
-# System & Software Fingerprinting Agent
+# PROJECT SUMMARY
+# System & Software Fingerprinting Tool
 
-## 🎉 PROJECT STATUS: COMPLETE
+## 📊 PROJECT STATUS: ACTIVE
 
-All requirements have been successfully implemented and tested.
+Simplified, production-ready fingerprinting tool.
 
 ## 📦 Deliverables
 
-### Core Implementation (5 Modules)
-✅ main.py                 - 400+ lines - Main agent with CLI interface
-✅ system_detector.py      - 200+ lines - System information detection
-✅ software_detector.py    - 200+ lines - Software inventory detection
-✅ remote_executor.py      - 300+ lines - SSH remote execution
-✅ utils.py               - 150+ lines - Utilities and evidence tracking
+### Core Implementation (Single Module)
+✅ main.py                      - 150+ lines - Complete fingerprinting tool
+✅ software_config.json         - Configuration for software detection
+✅ README.md                    - Comprehensive documentation
 
-### Supporting Files
-✅ software_config.json    - Software detection rules (8 targets)
-✅ requirements.txt       - Python dependencies
-✅ README.md             - Complete documentation
-✅ QUICKSTART.md         - Quick start guide
-✅ examples.py           - Usage examples and demos
-✅ test.py              - Automated test suite
-✅ .gitignore           - Git ignore rules
 
-## 🎯 Requirements Met
+## 🎯 Features Implemented
 
-### 2.1 Host & Environment Detection ✅
-- Operating System detection (macOS, Linux, Windows)
-- OS Version extraction
-- Kernel Version identification
-- CPU Architecture detection
-- Additional: Hostname, CPU model
+### System Detection ✅
+- Operating System (Darwin/Linux/Windows)
+- OS Version and Kernel
+- CPU Architecture (x86_64/arm64)
+- Hostname detection
+- CPU count and memory (GB)
+- Cross-platform support (macOS/Linux)
 
-### 2.2 Software Product Fingerprinting ✅
-- Product name detection
-- Version number extraction
+### Software Fingerprinting ✅
+- Config-driven detection (software_config.json)
+- Version extraction via `--version` flag
 - Product family categorization
 - Vendor identification
 - Install path tracking
-- Architecture detection
-- 8 pre-configured software targets
+- Architecture inheritance
+- Extensible via JSON config
 
-### 2.3 Connectivity Modes ✅
-- Local Mode: Direct subprocess execution
-- Remote Mode: SSH connectivity (paramiko)
-- Support for password and key-based auth
-- Configurable SSH ports
+### Connectivity Modes ✅
+- **Local Mode**: Native Python execution (`platform`, `psutil`, `shutil`)
+- **Remote Mode**: SSH via subprocess (key-based auth only)
+- Automatic SSH connectivity testing
+- Unified command interface
 
-### 3. Data Integrity & Logging ✅
-- Evidence tracking for every data point
-- Command executed recorded
-- Raw output captured
-- Timestamp tracking
-- Comprehensive logging
+### Data Integrity ✅
+- Evidence tracking for all detections
+- Command logging ("command_run")
+- Raw output capture ("raw_output")
+- ISO 8601 timestamps
+- Structured JSON output
 
-### 4. JSON Output Format ✅
-- Structured fingerprint_report.json
-- Agent metadata section
-- System info section
-- Software inventory array
-- Evidence for all data points
-- Exactly matches required format
+### Output Format ✅
+- Timestamped JSON files: `fingerprint_{mode}_{timestamp}.json`
+- Scan metadata (type, host, user)
+- System information section
+- Software array with evidence
+- Custom output path support
 
-## 🧪 Test Results
+## 🧪 Current Status
 
+**Implementation**: Simplified single-file architecture  
+**Dependencies**: `psutil` only  
+**Lines of Code**: ~150 (main.py)  
+**Config Format**: JSON (software_config.json)  
+
+## 📊 Capabilities
+
+### Local Scan
+- Direct system introspection
+- Fast execution (<1 second)
+- No external dependencies beyond psutil
+- Native Python APIs
+
+### Remote Scan
+- SSH-based execution
+- Automatic connectivity check
+- Compatible with any SSH-accessible system
+- Key-based authentication required
+
+### Pre-configured Software (10 entries)
 ```
-TEST SUITE: PASSED ✅
-- Module imports: ✅
-- Utilities: ✅
-- Configuration: ✅
-- System detection: ✅
-- Software detection: ✅
-
-Results: 5/5 tests passed
-```
-
-## 📊 Live Scan Results
-
-```
-System Detected:
-  OS: macOS 15.7.2
-  Kernel: 24.6.0
-  CPU: Apple M4 Pro
-  Architecture: arm64
-
-Software Detected: 6/8 targets found
-  ✅ Visual Studio Code 1.107.1
-  ✅ Docker 29.1.3
-  ✅ Slack 4.47.72
-  ✅ Google Chrome 143.0.7499.193
-  ✅ Python 3.9.6
-  ✅ Git 2.50.1
+✅ Python (python3)
+✅ Git (git)
+✅ Docker (docker)
+✅ Node.js (node)
+✅ VS Code (code)
+✅ Java (java)
+✅ Chrome (google-chrome)
+✅ Firefox (firefox)
+✅ npm (npm)
+✅ Kubernetes (kubectl)
 ```
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    main.py                          │
-│              (FingerprintAgent)                     │
-│  ┌───────────────────────────────────────────────┐ │
-│  │  CLI Interface & Orchestration                │ │
-│  └───────────────────────────────────────────────┘ │
-└────────────┬───────────────────────────┬───────────┘
-             │                           │
-    ┌────────▼────────┐         ┌───────▼──────────┐
-    │ Local Mode      │         │  Remote Mode     │
-    │                 │         │  (SSH)           │
-    └────────┬────────┘         └───────┬──────────┘
-             │                           │
-    ┌────────▼──────────────────────────▼────────┐
-    │                                             │
-    │  ┌──────────────────┐  ┌─────────────────┐ │
-    │  │ system_detector  │  │software_detector│ │
-    │  │                  │  │                 │ │
-    │  │ • OS Detection   │  │ • App Scanning  │ │
-    │  │ • CPU Info       │  │ • Version Ext.  │ │
-    │  │ • Architecture   │  │ • Config-driven │ │
-    │  └──────────────────┘  └─────────────────┘ │
-    │                                             │
-    │  ┌─────────────────────────────────────┐   │
-    │  │         utils.py                    │   │
-    │  │  • Command Execution                │   │
-    │  │  • Evidence Tracking                │   │
-    │  │  • JSON Formatting                  │   │
-    │  └─────────────────────────────────────┘   │
-    └─────────────────────────────────────────────┘
-                        │
-                        ▼
-            ┌──────────────────────┐
-            │ fingerprint_report   │
-            │      .json           │
-            └──────────────────────┘
+┌───────────────────────────────────────────────┐
+│              main.py (150 lines)              │
+│                                               │
+│  ┌─────────────────────────────────────────┐ │
+│  │   CLI (argparse)                        │ │
+│  │   --mode, --host, --user, --config      │ │
+│  └──────────────┬──────────────────────────┘ │
+│                 │                             │
+│     ┌───────────▼──────────┐                 │
+│     │  Mode Selection      │                 │
+│     └───┬──────────────┬───┘                 │
+│         │              │                     │
+│  ┌──────▼─────┐ ┌─────▼──────┐              │
+│  │run_local   │ │run_remote  │              │
+│  │_scan()     │ │_scan()     │              │
+│  └──────┬─────┘ └─────┬──────┘              │
+│         │              │                     │
+│         └──────┬───────┘                     │
+│                │                             │
+│  ┌─────────────▼────────────────┐           │
+│  │  get_system_info()           │           │
+│  │  • platform / uname          │           │
+│  │  • psutil (cpu, memory)      │           │
+│  └──────────────────────────────┘           │
+│                                              │
+│  ┌─────────────────────────────┐            │
+│  │  get_software_info()        │            │
+│  │  • load_software_config()   │            │
+│  │  • which / shutil.which()   │            │
+│  │  • get_version()            │            │
+│  └──────────────────────────────┘           │
+│                                              │
+│  ┌─────────────────────────────┐            │
+│  │  run_cmd()                  │            │
+│  │  • subprocess.run()         │            │
+│  │  • SSH via subprocess       │            │
+│  └──────────────────────────────┘           │
+└───────────────┬──────────────────────────────┘
+                │
+                ▼
+    ┌───────────────────────────┐
+    │  software_config.json     │
+    │  (Input)                  │
+    └───────────────────────────┘
+                │
+                ▼
+    ┌───────────────────────────┐
+    │  fingerprint_*.json       │
+    │  (Output)                 │
+    └───────────────────────────┘
 ```
 
 
@@ -139,18 +147,46 @@ Software Detected: 6/8 targets found
 ## 🚀 Usage
 
 ```bash
-# Quick start
-python main.py --mode local
+# Local scan (default)
+python3 main.py
+
+# Local with custom config
+python3 main.py --config custom.json
 
 # Remote scan
-python main.py --mode remote --host IP --user USER --key-file KEY
+python3 main.py --mode remote --host 192.168.1.100 --user admin
 
-# Run tests
-python test.py
+# Custom output file
+python3 main.py --output my_report.json
 
-# View examples
-python examples.py
+# View help
+python3 main.py --help
 ```
+
+## 📝 Configuration Example
+
+**software_config.json:**
+```json
+{
+  "software": [
+    {
+      "name": "PostgreSQL",
+      "command": "psql",
+      "family": "Database",
+      "vendor": "PostgreSQL Global Development Group"
+    }
+  ]
+}
+```
+
+## 🔧 Technical Details
+
+- **Language**: Python 3.7+
+- **Dependencies**: `psutil` (local system info)
+- **SSH Method**: Native subprocess (no paramiko needed)
+- **Detection**: Command existence via `which` / `shutil.which()`
+- **Versioning**: Generic `--version` flag parsing
+- **Output**: ISO 8601 timestamps, JSON format
 
 
 

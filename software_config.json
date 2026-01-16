@@ -1,156 +1,64 @@
 {
-  "software_targets": [
-    {
-      "name": "PyCharm Professional",
-      "family": "IDE",
-      "vendor": "JetBrains",
-      "detection": {
-        "darwin": {
-          "command": "mdfind \"kMDItemCFBundleIdentifier == 'com.jetbrains.pycharm'\" 2>/dev/null | head -n 1",
-          "version_command": "defaults read '{app_path}/Contents/Info.plist' CFBundleShortVersionString 2>/dev/null"
-        },
-        "linux": {
-          "command": "which pycharm 2>/dev/null || find /opt /usr/local -name pycharm.sh 2>/dev/null | head -n 1",
-          "version_command": "pycharm --version 2>/dev/null | grep -oP '\\d+\\.\\d+\\.\\d+' | head -n 1"
-        },
-        "windows": {
-          "command": "where pycharm 2>nul",
-          "version_command": "pycharm --version 2>nul"
-        }
-      }
-    },
-    {
-      "name": "Visual Studio Code",
-      "family": "IDE",
-      "vendor": "Microsoft",
-      "detection": {
-        "darwin": {
-          "command": "mdfind \"kMDItemCFBundleIdentifier == 'com.microsoft.VSCode'\" 2>/dev/null | head -n 1",
-          "version_command": "defaults read '{app_path}/Contents/Info.plist' CFBundleShortVersionString 2>/dev/null"
-        },
-        "linux": {
-          "command": "which code 2>/dev/null",
-          "version_command": "code --version 2>/dev/null | head -n 1"
-        },
-        "windows": {
-          "command": "where code 2>nul",
-          "version_command": "code --version 2>nul"
-        }
-      }
-    },
-    {
-      "name": "Docker",
-      "family": "Virtualization",
-      "vendor": "Docker Inc.",
-      "detection": {
-        "darwin": {
-          "command": "which docker 2>/dev/null",
-          "version_command": "docker --version 2>/dev/null | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -n 1"
-        },
-        "linux": {
-          "command": "which docker 2>/dev/null",
-          "version_command": "docker --version 2>/dev/null | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -n 1"
-        },
-        "windows": {
-          "command": "where docker 2>nul",
-          "version_command": "docker --version 2>nul"
-        }
-      }
-    },
-    {
-      "name": "Slack",
-      "family": "Communication",
-      "vendor": "Slack Technologies",
-      "detection": {
-        "darwin": {
-          "command": "mdfind \"kMDItemCFBundleIdentifier == 'com.tinyspeck.slackmacgap'\" 2>/dev/null | head -n 1",
-          "version_command": "defaults read '{app_path}/Contents/Info.plist' CFBundleShortVersionString 2>/dev/null"
-        },
-        "linux": {
-          "command": "which slack 2>/dev/null",
-          "version_command": "slack --version 2>/dev/null | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -n 1"
-        },
-        "windows": {
-          "command": "where slack 2>nul",
-          "version_command": "slack --version 2>nul"
-        }
-      }
-    },
-    {
-      "name": "Google Chrome",
-      "family": "Browser",
-      "vendor": "Google",
-      "detection": {
-        "darwin": {
-          "command": "mdfind \"kMDItemCFBundleIdentifier == 'com.google.Chrome'\" 2>/dev/null | head -n 1",
-          "version_command": "defaults read '{app_path}/Contents/Info.plist' CFBundleShortVersionString 2>/dev/null"
-        },
-        "linux": {
-          "command": "which google-chrome 2>/dev/null || which google-chrome-stable 2>/dev/null",
-          "version_command": "google-chrome --version 2>/dev/null | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+' | head -n 1"
-        },
-        "windows": {
-          "command": "where chrome 2>nul",
-          "version_command": "chrome --version 2>nul"
-        }
-      }
-    },
-    {
-      "name": "Firefox",
-      "family": "Browser",
-      "vendor": "Mozilla",
-      "detection": {
-        "darwin": {
-          "command": "mdfind \"kMDItemCFBundleIdentifier == 'org.mozilla.firefox'\" 2>/dev/null | head -n 1",
-          "version_command": "defaults read '{app_path}/Contents/Info.plist' CFBundleShortVersionString 2>/dev/null"
-        },
-        "linux": {
-          "command": "which firefox 2>/dev/null",
-          "version_command": "firefox --version 2>/dev/null | grep -oE '[0-9]+\\.[0-9]+\\.?[0-9]*' | head -n 1"
-        },
-        "windows": {
-          "command": "where firefox 2>nul",
-          "version_command": "firefox --version 2>nul"
-        }
-      }
-    },
+  "software": [
     {
       "name": "Python",
+      "command": "python3",
       "family": "Programming Language",
-      "vendor": "Python Software Foundation",
-      "detection": {
-        "darwin": {
-          "command": "which python3 2>/dev/null || which python 2>/dev/null",
-          "version_command": "python3 --version 2>&1 | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' || python --version 2>&1 | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+'"
-        },
-        "linux": {
-          "command": "which python3 2>/dev/null || which python 2>/dev/null",
-          "version_command": "python3 --version 2>&1 | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' || python --version 2>&1 | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+'"
-        },
-        "windows": {
-          "command": "where python 2>nul",
-          "version_command": "python --version 2>nul"
-        }
-      }
+      "vendor": "Python Software Foundation"
     },
     {
       "name": "Git",
+      "command": "git",
       "family": "Version Control",
-      "vendor": "Git SCM",
-      "detection": {
-        "darwin": {
-          "command": "which git 2>/dev/null",
-          "version_command": "git --version 2>/dev/null | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -n 1"
-        },
-        "linux": {
-          "command": "which git 2>/dev/null",
-          "version_command": "git --version 2>/dev/null | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -n 1"
-        },
-        "windows": {
-          "command": "where git 2>nul",
-          "version_command": "git --version 2>nul"
-        }
-      }
+      "vendor": "Git SCM"
+    },
+    {
+      "name": "Docker",
+      "command": "docker",
+      "family": "Virtualization",
+      "vendor": "Docker Inc."
+    },
+    {
+      "name": "Node.js",
+      "command": "node",
+      "family": "Runtime",
+      "vendor": "OpenJS Foundation"
+    },
+    {
+      "name": "VS Code",
+      "command": "code",
+      "family": "IDE",
+      "vendor": "Microsoft"
+    },
+    {
+      "name": "Java",
+      "command": "java",
+      "family": "Runtime",
+      "vendor": "Oracle"
+    },
+    {
+      "name": "Chrome",
+      "command": "google-chrome",
+      "family": "Browser",
+      "vendor": "Google"
+    },
+    {
+      "name": "Firefox",
+      "command": "firefox",
+      "family": "Browser",
+      "vendor": "Mozilla"
+    },
+    {
+      "name": "npm",
+      "command": "npm",
+      "family": "Package Manager",
+      "vendor": "npm Inc."
+    },
+    {
+      "name": "Kubernetes",
+      "command": "kubectl",
+      "family": "Container Orchestration",
+      "vendor": "CNCF"
     }
   ]
 }

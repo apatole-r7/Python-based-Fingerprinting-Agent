@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-01-15T18:52:00.732939+00:00",
+  "system": {
+    "os": "Darwin",
+    "version": "Darwin Kernel Version 24.6.0: Wed Oct 15 21:12:15 PDT 2025; root:xnu-11417.140.69.703.14~1/RELEASE_ARM64_T6041",
+    "kernel": "24.6.0",
+    "cpu": "arm",
+    "architecture": "arm64",
+    "hostname": "PNQ-MBP-14600",
+    "cpu_count": 14,
+    "memory_gb": 24.0
+  },
+  "software": [
+    {
+      "productName": "Python",
+      "versionNumber": "3.9.6",
+      "architecture": "arm64",
+      "productFamily": "Programming Language",
+      "vendor": "Python Software Foundation",
+      "installPath": "/usr/bin/python3",
+      "evidence": {
+        "command_run": "which python3",
+        "raw_output": "/usr/bin/python3"
+      }
+    },
+    {
+      "productName": "Git",
+      "versionNumber": "2.50.1",
+      "architecture": "arm64",
+      "productFamily": "Version Control",
+      "vendor": "Git SCM",
+      "installPath": "/usr/bin/git",
+      "evidence": {
+        "command_run": "which git",
+        "raw_output": "/usr/bin/git"
+      }
+    },
+    {
+      "productName": "Docker",
+      "versionNumber": "29.1.3",
+      "architecture": "arm64",
+      "productFamily": "Virtualization",
+      "vendor": "Docker Inc.",
+      "installPath": "/usr/local/bin/docker",
+      "evidence": {
+        "command_run": "which docker",
+        "raw_output": "/usr/local/bin/docker"
+      }
+    },
+    {
+      "productName": "Node.js",
+      "versionNumber": "25.2.1",
+      "architecture": "arm64",
+      "productFamily": "Runtime",
+      "vendor": "OpenJS Foundation",
+      "installPath": "/usr/local/bin/node",
+      "evidence": {
+        "command_run": "which node",
+        "raw_output": "/usr/local/bin/node"
+      }
+    },
+    {
+      "productName": "Java",
+      "versionNumber": "21.0.9",
+      "architecture": "arm64",
+      "productFamily": "Runtime",
+      "vendor": "Oracle",
+      "installPath": "/usr/bin/java",
+      "evidence": {
+        "command_run": "which java",
+        "raw_output": "/usr/bin/java"
+      }
+    }
+  ]
+}

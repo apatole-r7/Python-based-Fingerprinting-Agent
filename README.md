@@ -1,81 +1,79 @@
-# System & Software Fingerprinting Agent
+# System & Software Fingerprinting Tool
 
-A Python-based agent for identifying system specifications and installed software details. Supports both local and remote (SSH) execution.
+A lightweight Python tool for identifying system specifications and installed software. Supports both local and remote (SSH) scanning.
 
 ## Features
 
-- **System Information Detection**: OS, version, kernel, CPU architecture
-- **Software Fingerprinting**: Detects installed applications (PyCharm, VS Code, Docker, Slack, Chrome, etc.)
+- **System Information Detection**: OS, version, kernel, CPU, architecture, memory
+- **Software Fingerprinting**: Detects installed applications via configuration file
 - **Dual Mode Operation**:
-  - **Local Mode**: Run directly on the host machine
-  - **Remote Mode**: Connect via SSH to fingerprint remote systems
-- **Evidence Tracking**: Records commands and raw output for audit purposes
-- **JSON Export**: Structured output in `fingerprint_report.json`
+  - **Local Mode**: Scan the current system
+  - **Remote Mode**: Connect via SSH to scan remote systems
+- **Evidence Tracking**: Records detection commands and raw output
+- **JSON Export**: Timestamped structured output files
+- **Configurable**: External JSON config for software definitions
 
 ## Installation
 
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+pip install psutil
 ```
 
 ## Usage
 
 ### Local Mode
 ```bash
-python main.py --mode local
+python3 main.py
+# or explicitly
+python3 main.py --mode local
 ```
 
 ### Remote Mode
 ```bash
-python main.py --mode remote --host 192.168.1.100 --user admin --password yourpass
+python3 main.py --mode remote --host 192.168.1.100 --user admin
 ```
 
-Or with SSH key:
-```bash
-python main.py --mode remote --host 192.168.1.100 --user admin --key-file ~/.ssh/id_rsa
-```
+**Note**: Remote mode requires SSH key-based authentication to be configured.
 
 ### Command Line Options
 ```
 --mode          : Operation mode (local/remote) [default: local]
 --host          : Remote host IP/hostname (required for remote mode)
 --user          : SSH username (required for remote mode)
---password      : SSH password (optional)
---key-file      : Path to SSH private key (optional)
---port          : SSH port [default: 22]
---output        : Output JSON file path [default: fingerprint_report.json]
---config        : Custom config file [default: config.json]
+--output        : Output JSON file path (optional, auto-generated if not specified)
+--config        : Custom config file [default: software_config.json]
 ```
 
 ## Output Format
 
-The agent generates a JSON file with the following structure:
+The tool generates a JSON file with the following structure:
 
 ```json
 {
-  "agent_metadata": {
-    "timestamp": "2026-01-15T10:00:00Z",
-    "scan_type": "local",
-    "target_host": "localhost"
+  "scan_type": "local",
+  "timestamp": "2026-01-16T10:30:00.123456+00:00",
+  "system": {
+    "os": "Darwin",
+    "version": "Darwin Kernel Version 24.6.0",
+    "kernel": "24.6.0",
+    "cpu": "arm",
+    "architecture": "arm64",
+    "hostname": "MacBook-Pro.local",
+    "cpu_count": 12,
+    "memory_gb": 32.0
   },
-  "system_info": {
-    "os": "macOS",
-    "version": "14.2.1",
-    "kernel": "23.2.0",
-    "cpu": "Apple M2",
-    "architecture": "arm64"
-  },
-  "software_inventory": [
+  "software": [
     {
-      "productName": "PyCharm Professional",
-      "versionNumber": "2023.3.2",
+      "productName": "Python",
+      "versionNumber": "Python 3.9.6",
       "architecture": "arm64",
-      "productFamily": "IDE",
-      "vendor": "JetBrains",
+      "productFamily": "Programming Language",
+      "vendor": "Python Software Foundation",
+      "installPath": "/usr/bin/python3",
       "evidence": {
-        "command_run": "mdfind \"kMDItemCFBundleIdentifier == 'com.jetbrains.pycharm'\"",
-        "raw_output": "/Applications/PyCharm.app"
+        "command_run": "which python3",
+        "raw_output": "/usr/bin/python3"
       }
     }
   ]
@@ -84,50 +82,75 @@ The agent generates a JSON file with the following structure:
 
 ## Configuration
 
-Software targets are defined in `config.json`. You can add custom software by following the pattern:
+Software targets are defined in `software_config.json`. Add or modify software entries:
 
 ```json
 {
-  "name": "Software Name",
-  "family": "Category",
-  "vendor": "Vendor Name",
-  "detection": {
-    "darwin": {
-      "command": "detection command",
-      "version_command": "version extraction command"
+  "software": [
+    {
+      "name": "PostgreSQL",
+      "command": "psql",
+      "family": "Database",
+      "vendor": "PostgreSQL Global Development Group"
     },
-    "linux": {...},
-    "windows": {...}
-  }
+    {
+      "name": "Kubernetes",
+      "command": "kubectl",
+      "family": "Container Orchestration",
+      "vendor": "CNCF"
+    }
+  ]
 }
 ```
+
+**Fields:**
+- `name`: Display name of the software
+- `command`: Shell command to detect (e.g., `python3`, `docker`, `git`)
+- `family`: Category (e.g., "Programming Language", "IDE", "Database")
+- `vendor`: Software vendor or organization
 
 ## Project Structure
 
 ```
 fingerprinting/
-├── main.py                 # Main agent script
-├── system_detector.py      # System information detection
-├── software_detector.py    # Software fingerprinting
-├── remote_executor.py      # SSH remote execution
-├── utils.py               # Helper functions
-├── config.json            # Software detection configurations
-├── requirements.txt       # Python dependencies
-└── README.md             # This file
+├── main.py                     # Main application (all-in-one)
+├── software_config.json        # Software detection configurations
+├── README.md                   # This file
+└── fingerprint_*.json          # Output files (generated)
 ```
+
+## How It Works
+
+1. **Local Scan**: Uses Python's `platform`, `psutil`, and `shutil` modules to detect system info and software
+2. **Remote Scan**: Executes commands via SSH using `subprocess` (requires SSH key authentication)
+3. **Version Detection**: Runs `<command> --version` for each detected software
+4. **Evidence Collection**: Stores the exact commands and outputs for audit trails
 
 ## Requirements
 
 - Python 3.7+
-- paramiko (for SSH connectivity)
+- `psutil` library
+- SSH access (for remote mode)
 
 ## Security Notes
 
-- Use SSH keys instead of passwords when possible
-- Ensure proper permissions on SSH key files (chmod 600)
+- Remote mode requires SSH key-based authentication
+- Ensure proper SSH key permissions (`chmod 600 ~/.ssh/id_rsa`)
+- Review software_config.json before scanning
 - Be cautious when running on production systems
-- Review commands in config.json before execution
 
-## License
+## Examples
 
-MIT License
+```bash
+# Scan localhost with default config
+python3 main.py
+
+# Scan localhost with custom config
+python3 main.py --config custom_software.json --output my_scan.json
+
+# Scan remote server
+python3 main.py --mode remote --host prod-server-01 --user sysadmin
+
+# Scan remote with custom output
+python3 main.py --mode remote --host 10.0.1.50 --user admin --output server_scan.json
+```
